@@ -5,7 +5,7 @@ import { EmployeeCostsComponent } from "./employee-costs.component";
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
+import { AppModule, HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
@@ -31,11 +31,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EmployeeCostsComponent,
-    TopBarComponent
   ],
   exports:[
     EmployeeCostsComponent,
-    TopBarComponent
   ],
   imports: [
     BrowserModule,

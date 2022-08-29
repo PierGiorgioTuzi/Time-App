@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
+import { AppModule, HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,6 +33,7 @@ const routes: Routes = [
   ],
 
   imports: [
+    AppModule,
     BrowserModule, 
     ButtonModule,
     CalendarModule,

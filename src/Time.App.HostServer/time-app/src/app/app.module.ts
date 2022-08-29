@@ -39,12 +39,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TopBarComponent } from './layout/topbar/topbar.component';
 // import ngx-translate and the http loader
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
+    TopBarComponent
   ],
 
   imports: [
