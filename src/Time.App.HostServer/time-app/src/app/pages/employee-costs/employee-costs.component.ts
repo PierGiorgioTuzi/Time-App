@@ -19,7 +19,9 @@ import { RegistryService } from 'src/app/services/registry.service';
 })
 export class EmployeeCostsComponent implements OnInit {
 
-  /*
+  /*+
+
+  
   * Active link in Sidebar
   */
   activeLink: ActiveLinkENUM
