@@ -234,8 +234,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
   constructor(
     private chDf: ChangeDetectorRef,
     private calendarService: CalendarService,
