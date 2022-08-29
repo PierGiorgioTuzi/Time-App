@@ -1,33 +1,39 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login.component';
 import { RouterModule, Routes } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { TopBarComponent } from './topbar.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DropdownModule } from 'primeng/dropdown';
+import { SidebarModule } from 'primeng/sidebar';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: TopBarComponent
   }
 ];
 
+
 @NgModule({
   declarations: [
-    LoginComponent
+    TopBarComponent,
+    SidebarComponent
   ],
-  exports: [
-    
+  exports:[
+    TopBarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
-    ButtonModule,
     FormsModule,
-    CommonModule,
+    DropdownModule,
+    SidebarModule,
+    OverlayPanelModule,
     RouterModule.forChild(routes),
     TranslateModule.forRoot({
       loader: {
@@ -38,4 +44,5 @@ const routes: Routes = [
     }),
   ]
 })
-export class LoginModule { }
+
+export class TopBarModule { }

@@ -15,6 +15,7 @@ registerLocaleData(localeIt, 'it');
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css']
 })
+
 export class TopBarComponent implements OnInit {
   /*
   * View Child of Sidebar

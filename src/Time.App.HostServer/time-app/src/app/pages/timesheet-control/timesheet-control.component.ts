@@ -168,7 +168,7 @@ export class TimesheetControlComponent implements OnInit, AfterContentChecked, A
 
   }
 
-  toggleWeekend(event): void {
+  toggleWeekend(event: { checked: boolean; }): void {
     this.weekend = event.checked
     this.updateRange()
   }

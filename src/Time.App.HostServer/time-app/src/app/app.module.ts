@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Component, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,23 +26,27 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { DateService } from './services/date.service';
 import { RegistryService } from './services/registry.service';
-import {TableModule} from 'primeng/table';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { TableModule} from 'primeng/table';
+import { InputSwitchModule} from 'primeng/inputswitch';
+import { InputNumberModule} from 'primeng/inputnumber';
+import { OverlayPanelModule} from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './layout/topbar/topbar.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AppBootstrapperService } from './core/app-bootstrapper.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { TopBarComponent } from './layout/topbar/topbar.component';
 // import ngx-translate and the http loader
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    TopBarComponent,
     SidebarComponent,
   ],
+
   imports: [
     BrowserModule,
     TranslateModule.forRoot({
@@ -53,6 +57,7 @@ import { AppBootstrapperService } from './core/app-bootstrapper.service';
       },
     }),
     AppRoutingModule,
+    DropdownModule,
     BrowserAnimationsModule,
     OverlayPanelModule,
     InputTextModule,
@@ -76,8 +81,10 @@ import { AppBootstrapperService } from './core/app-bootstrapper.service';
     ConfirmDialogModule,
     InputSwitchModule,
     ToggleButtonModule,
-    InputNumberModule
+    InputNumberModule,
+    OverlayPanelModule
   ],
+
   providers: [
     {
       provide: LOCALE_ID,
@@ -102,8 +109,10 @@ import { AppBootstrapperService } from './core/app-bootstrapper.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
-  export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+
+export class AppModule { }
+  
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
 }
 

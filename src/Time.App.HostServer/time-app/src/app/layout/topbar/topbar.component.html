@@ -8,7 +8,6 @@
     <div>
       <div class="user-block" (click)="op.toggle($event)">
         <a class="link" style="color: white; padding-top:4px!important;margin-right: 7px;">
-<!--           <i class="fa-solid fa-grid"></i> -->
            <i class="fas fa-th"></i>
         </a>
         <p-overlayPanel #op [showTransitionOptions]="'300ms'" [hideTransitionOptions]="'300ms'" [dismissable]="true"
@@ -38,10 +37,6 @@
           </ng-template>
       </p-overlayPanel>
       </div>
-<!--       <div class="black-block">
-        <span [ngClass]="{'active': language === 'it'}" (click)="changeLanguage('it')" title="Italiano">ITA</span>
-        <span [ngClass]="{'active': language === 'en'}" (click)="changeLanguage('en')" title="English">ENG</span>
-      </div> -->
       <div class="radio">
       <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="code" class="languages"
         (ngModelChange)="translate(selectedLanguage)">
