@@ -1,0 +1,115 @@
+html {
+  font-size: 14px;
+}
+.labelLink {
+  outline: none;
+}
+.fa-folder,
+.fa-users {
+  font-size: 24px;
+  padding-left: 11px;
+}
+.active {
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+}
+.active2 {
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+}
+.subMenu {
+  padding-left: 1rem;
+}
+.itemSubMenu {
+  padding-left: .5rem;
+  margin-bottom: 10px;
+}
+.fa-address-book,
+.fa-calendar {
+  font-size: 24px;
+  padding-left: 11px;
+}
+.labelBox {
+  height: 100%;
+  background-color: #ebebeb94;
+  border-radius: 15px;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 0;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.labelBox:hover {
+  cursor: pointer;
+}
+.label a {
+  padding-left: 1rem !important;
+  font-size: inherit;
+  text-decoration: none;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding-left: 1.3rem;
+  color: #3a3a3a;
+}
+.titleMenu {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: #3a3a3a;
+  width: 50%;
+  margin: 14px;
+  font-weight: 700;
+}
+.containerMenu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--surface-overlay);
+  width: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: transform .4s cubic-bezier(.05, .74, .2, .99);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  max-width: 266px;
+}
+.logoRetail {
+  position: absolute;
+  display: block;
+  bottom: 2px;
+  left: 34px;
+}
+:host ::ng-deep .p-sidebar {
+  width: 266px !important;
+}
+:host ::ng-deep .p-sidebar .p-sidebar-header {
+  z-index: 1000;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  transform: scale(0.9);
+  padding: 0;
+}
+.costopersonale:hover>div,
+.costopersonale:hover>div a,
+.controllo:hover>div,
+.controllo:hover>div a,
+.agenda:hover>div,
+.agenda:hover>div a,
+.anagrafiche:hover>div,
+.anagrafiche:hover>div a {
+  color: #008ECC
+}
+.itemSubMenu:hover {
+  cursor: pointer;
+}
+:host ::ng-deep .p-component-overlay {
+  z-index: 6;
+}
+.menu {
+  margin-left: 8px;
+}

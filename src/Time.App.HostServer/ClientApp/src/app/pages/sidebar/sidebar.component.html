@@ -1,0 +1,50 @@
+<p-sidebar [(visible)]="sidebarStatus" [style]="{width:'18em', 'zIndex': '99999'}" [transitionOptions]="'400ms'" (onHide)="setStatus(false)">
+    <div class="containerMenu">
+        <h1 class="titleMenu">MENU</h1>
+
+        <div class="menu">
+            <div class="item">
+                <div class="item itemSubMenu agenda">
+                    <div class="label labelBox " (click)="goTo('agenda')">
+                        <i class="fa fa-address-book" aria-hidden="true"
+                            [class.active2]="activeLink === activeLinkENUM.AGENDA"></i>
+                        <a class="labelLink" title="{{ 'sidebar.agenda' | translate}}"
+                            [class.active2]="activeLink === activeLinkENUM.AGENDA">{{ 'sidebar.agenda' | translate}}</a>
+                    </div>
+                </div>
+                <div class="item itemSubMenu anagrafiche">
+                    <div class="label labelBox" *ngIf="user.canSeeAndModifyRegistry" (click)="goTo('registry')">
+                        <i class="fa fa-folder" aria-hidden="true"
+                            [class.active2]="activeLink === activeLinkENUM.ANAGRAFICHE"></i>
+                        <a class="labelLink" title="{{ 'sidebar.tables' | translate}}"
+                            [class.active2]="activeLink === activeLinkENUM.ANAGRAFICHE">{{ 'sidebar.tables' |
+                            translate}}</a>
+                    </div>
+                </div>
+                <div class="item itemSubMenu costopersonale">
+                    <div class="label labelBox " *ngIf="user.canSeeAndModifyCosts" (click)="goTo('staff-price')"> 
+                        <i class="fa fa-users" aria-hidden="true"
+                            [class.active2]="activeLink === activeLinkENUM.COSTOPERSONALE"></i>
+                        <a class="labelLink" title="{{ 'sidebar.projects' | translate}}"
+                            [class.active2]="activeLink === activeLinkENUM.COSTOPERSONALE">{{ 'sidebar.projects' |
+                            translate}}</a>
+                    </div>
+                </div>
+                <div class="item itemSubMenu controllo">
+                    <div class="label labelBox "  *ngIf="user.canSeeAndModifyInsertControl" (click)="goTo('insert-control')">
+                        <i class="fa fa-calendar" aria-hidden="true"
+                            [class.active2]="activeLink === activeLinkENUM.CONTROLLOINSERIMENTI"></i>
+                        <a class="labelLink" title="{{ 'sidebar.monthly' | translate}}"
+                            [class.active2]="activeLink === activeLinkENUM.CONTROLLOINSERIMENTI">{{ 'sidebar.monthly' |
+                            translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="logoRetail">
+            <a href="https://www.retailitaliasrl.it/" target="_blank"><img style="width: 200px" src="assets/images/retaillogosidebar.png" ></a>
+           </div>
+    </div>
+
+
+</p-sidebar>

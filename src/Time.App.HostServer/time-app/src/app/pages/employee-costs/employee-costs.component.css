@@ -1,0 +1,109 @@
+.container-fluid{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+.header-title {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+}
+.header-title h1 {
+    position: absolute;
+    top:20px;
+    left:10px
+}
+:host ::ng-deep button.p-element.p-ripple.p-ri-autocomplete-dropdown.p-autocomplete-items {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
+.filters {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.col-4 {
+  max-width: 25%;
+  margin-bottom: 30px;
+}
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+}
+:host ::ng-deep .p-paginator-bottom{
+  position: absolute;
+  bottom: -63px;
+  width: 100%;
+} 
+:host ::ng-deep  .p-datatable-responsive-scroll>.p-datatable-wrapper>table,
+:host ::ng-deep  .p-datatable-auto-layout>.p-datatable-wrapper>table {
+  table-layout: unset!important;
+}
+:host ::ng-deep .p-datatable-wrapper {
+  height: 71vh;
+}
+:host ::ng-deep .p-editable-column:hover {
+  cursor: pointer;
+}
+:host ::ng-deep .not-editable:hover {
+  cursor:not-allowed;
+  user-select: none;
+}
+td:hover {
+  cursor: default;
+}
+.editableTD {
+  color: limegreen;
+  font-weight: 700
+}
+.userFilterButton {
+  max-width: 170px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.import {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+:host ::ng-deep p-dropdown  {
+  background: #ffffff;
+  border: 1px solid #ced4da;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
+}
+:host ::ng-deep p-dropdown > div {
+  border-radius: 0;
+  box-shadow: none;
+}
+.cost {
+  justify-content: space-around;
+}
+.label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 100px;
+}
+.editingCost {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+.external {
+  color:mediumslateblue
+}
+.name:hover {
+  cursor: pointer;
+  color: var(--blue)
+}
+@media screen and (max-width: 1240px) {
+  .side {
+    height: 110vh!important
+  }
+}

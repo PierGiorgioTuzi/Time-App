@@ -1,0 +1,86 @@
+.table-container {
+    padding: 10px 50px;
+    width: 100%;
+}
+h4 {
+    margin: 10px 0 10px!important;
+}
+th:first-child {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+th:first-child:hover {
+    cursor: pointer;
+}
+th:first-child button {
+    margin: 0;
+}
+.header-title {
+    width: 100%;
+}
+.fa-check {
+    color:limegreen
+}
+.fa-x {
+    color:red
+}
+#roles tr>th {
+    padding: 0 8px!important;
+}
+.roleList {
+    font-weight: 700;
+}
+.roleList:hover {
+    color: var(--blue);
+    cursor: pointer;
+}
+:host ::ng-deep .p-datatable-wrapper {
+    height: 68vh;
+}
+:host ::ng-deep .p-datatable-tbody > tr > td,
+:host ::ng-deep .p-datatable .p-datatable-thead>tr>th  {
+    border-width: 1px 1px 1px 1px;
+}
+.search {
+    outline: none;
+    border: none;
+    box-shadow: 0px 2px 2px -0.5px rgb(0 0 0 / 15%), 0px 2px 2px -0.5px rgb(0 0 0 / 15%);
+    padding: 0.2rem 0.2rem 0;
+    margin-left: 8px;
+    padding-left:40px;
+    background: white;
+}
+.search:focus {
+    box-shadow: 0px 2px 2px -0.5px rgb(0 0 0 / 15%), 0px 2px 2px -0.5px rgb(0 0 0 / 15%);
+}
+:host ::ng-deep  .p-datatable .p-datatable-header {
+    background: transparent;
+    border: 0;
+    border-width: 0;
+    padding:0;
+    font-weight: 600;
+}
+.searchBar {
+    position: relative;
+    margin-left: 11px;
+    box-shadow: none;
+}
+.searchBar > span {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+.search-bar {
+    background: #f8f9fa;
+    color: #495057;
+    border: 1px solid #e9ecef;
+    border-width: 1px 1px 1px 1px;
+    padding: 8px;
+    font-weight: 600;
+}
+:host ::ng-deep  .pi-sort-alt {
+    font-size: 14px;
+}

@@ -1,0 +1,117 @@
+.page {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://mdm.dev-qa.retailitaliasrl.it/passport/background2.d73f07edb047fe7abeb9.jpg');
+    background-size: cover;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    background-color: #000c;
+    color: white;
+    padding: 40px;
+    position: relative;
+    width: 340px;
+    border-radius: 20px;
+}
+.login h2 {
+    text-align: center;
+    color: royalblue;
+    font-size: 7vh;
+    font-weight: 100;
+    letter-spacing: 2px;
+    font-family: unset;
+    margin-top: 2.2rem;
+    margin-bottom: 0;
+    padding-left: 9px;
+}
+.login h6 {
+    font-weight: 700;
+    font-size: 14px;
+    color: lightcyan;
+    text-shadow: 2px 2px 3px grey;
+    margin-bottom: 0;
+}
+button.login {
+    color: #fff;
+    outline: none;
+    background-color: #2196f3;
+    border: 1px solid #0000;
+    padding: 0.5rem 1rem;
+    font-size: 2vh;
+    letter-spacing: 1.5px;
+    font-weight: 100;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 100%;
+}
+label {
+    font-family: Nunito,sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    color: white;
+    letter-spacing: .8px;
+}
+input {
+    font-family: Nunito,sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 100;
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    box-sizing: border-box;
+    color: #fff;
+    border-radius: 5px;
+    outline: none;
+    background: #a2a2a261;
+    border: 1px solid #5a5a5a00;
+    margin-top:10px
+}
+::placeholder {
+    color:lightgrey;
+    font-size: 14px
+}
+.email,.password {
+    position: relative;
+}
+.fa-user-friends,
+.fa-lock {
+    position: absolute;
+    left: 10px;
+    top: 40px;
+}
+.error label {
+    color:red;
+}
+.box {
+    position: absolute;
+    content: "";
+    width: 133px;
+    height: 132px;
+    left: calc(50% - 65.5px);
+    top: -65px;
+    background-color: #000000b3;
+    display: block;
+    -webkit-clip-path: polygon(94.33013% 47.5%,94.69846% 48.2899%,94.92404% 49.13176%,95% 50%,94.92404% 50.86824%,94.69846% 51.7101%,94.33013% 52.5%,74.33013% 87.14102%,73.83022% 87.85495%,73.21394% 88.47124%,72.5% 88.97114%,71.7101% 89.33948%,70.86824% 89.56505%,70% 89.64102%,30% 89.64102%,29.13176% 89.56505%,28.2899% 89.33948%,27.5% 88.97114%,26.78606% 88.47124%,26.16978% 87.85495%,25.66987% 87.14102%,5.66987% 52.5%,5.30154% 51.7101%,5.07596% 50.86824%,5% 50%,5.07596% 49.13176%,5.30154% 48.2899%,5.66987% 47.5%,25.66987% 12.85898%,26.16978% 12.14505%,26.78606% 11.52876%,27.5% 11.02886%,28.2899% 10.66052%,29.13176% 10.43495%,30% 10.35898%,70% 10.35898%,70.86824% 10.43495%,71.7101% 10.66052%,72.5% 11.02886%,73.21394% 11.52876%,73.83022% 12.14505%,74.33013% 12.85898%);
+    clip-path: polygon(94.33013% 47.5%,94.69846% 48.2899%,94.92404% 49.13176%,95% 50%,94.92404% 50.86824%,94.69846% 51.7101%,94.33013% 52.5%,74.33013% 87.14102%,73.83022% 87.85495%,73.21394% 88.47124%,72.5% 88.97114%,71.7101% 89.33948%,70.86824% 89.56505%,70% 89.64102%,30% 89.64102%,29.13176% 89.56505%,28.2899% 89.33948%,27.5% 88.97114%,26.78606% 88.47124%,26.16978% 87.85495%,25.66987% 87.14102%,5.66987% 52.5%,5.30154% 51.7101%,5.07596% 50.86824%,5% 50%,5.07596% 49.13176%,5.30154% 48.2899%,5.66987% 47.5%,25.66987% 12.85898%,26.16978% 12.14505%,26.78606% 11.52876%,27.5% 11.02886%,28.2899% 10.66052%,29.13176% 10.43495%,30% 10.35898%,70% 10.35898%,70.86824% 10.43495%,71.7101% 10.66052%,72.5% 11.02886%,73.21394% 11.52876%,73.83022% 12.14505%,74.33013% 12.85898%);
+    transition: all .2s ease-in;
+    margin: 0 auto;
+}
+.box img {
+    width: 100px;
+    position: absolute;
+    top: 22px;
+    left: 16px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

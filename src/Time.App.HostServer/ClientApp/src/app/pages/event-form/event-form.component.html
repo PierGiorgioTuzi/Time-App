@@ -1,0 +1,142 @@
+<div *ngIf="loadForm">
+    <form  #eventForm="ngForm" name="eventForm">
+        <div class="col-12">
+            <label>{{'agenda.subTask' | translate}}</label>
+            <p style="margin:0;font-weight: 700;">{{dragEvent.name}}</p>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'agenda.assignee' | translate}}</label>
+            <p-riAutoComplete [(ngModel)]="dragEvent.user" [suggestions]="userList" [required]="true"
+                (completeMethod)="getUsersList($event)" field="name" [completeOnFocus]="true" [autocomplete]="''"
+                #user="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'" (onSelect)="checkPermission($event)"
+                [autoHighlight]="true" name="user" [dropdown]="true" appendTo="body" dataKey="id"
+                [style]="{'width': '100%' }" autocomplete="off" appendTo="body"
+                [undoStyleClass]="'p-button-text p-form-field-action-button'"
+                [clearStyleClass]="'p-button-text p-form-field-action-button'">
+            </p-riAutoComplete>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'agenda.agendaType' | translate}}</label>
+            <p style="margin:0;font-weight: 700;">{{dragEvent.agendaType?.name}}</p>
+        </div>
+        <div class="flex rangeBox">
+            <div class="flex column">
+                <label for="range">{{'agenda.chooseDate' | translate}}</label>
+                <p-calendar [(ngModel)]="dragEvent.startDate" appendTo="body" [disabled]="disabledForm" [required]="true" #range name="startDate" selectionMode="range" inputId="range" appendTo="body"
+                    dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div class="flex"> 
+                <div class="flex column">
+                    <label for="range">{{'agenda.startDate' | translate}}</label>
+                    <p-calendar [(ngModel)]="dragEvent.startTime" (onSelect)="setTime('startTime')" [disabled]="disabledForm" [required]="true"  [readonlyInput]="true" [timeOnly]="true" name="startTime"  inputId="timeonly"></p-calendar>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="flex column">
+                    <label for="range">{{'agenda.endDate' | translate}}</label>
+                    <p-calendar [(ngModel)]="dragEvent.endTime" [minDate]="dragEvent.startTime" (onSelect)="setTime('endTime')" [disabled]="disabledForm " [required]="true" [readonlyInput]="true" [timeOnly]="true" name="endTime"  inputId="timeonly"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="flex status rangeBox"  style="margin-bottom: 10px"> 
+            <div class="flex column" *ngIf="typeFromSidebar !==  fromSidebar.OTHER">
+                <label for="status">{{'agenda.currentStatus' | translate}}</label>
+                <p-riAutoComplete [(ngModel)]="dragEvent.status" [suggestions]="statusList" [required]="true" [disabled]="disabledForm || disabledStatus || disabilityStatus"
+                (completeMethod)="getStatusList()" field="name" [completeOnFocus]="true" [autocomplete]="''"
+                #status="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'"
+                [autoHighlight]="true" name="status" [dropdown]="true" appendTo="body" dataKey="id"
+                [style]="{'width': '100%' }" autocomplete="off" appendTo="body"
+                [undoStyleClass]="'p-button-text p-form-field-action-button'"
+                [clearStyleClass]="'p-button-text p-form-field-action-button'">
+                </p-riAutoComplete>
+            </div>
+            <div class="flex column">
+            <label for="range">{{'agenda.site' | translate}}</label>
+             <p-riAutoComplete [(ngModel)]="dragEvent.site" [suggestions]="siteList" [required]="true" [disabled]="disabledForm"
+            (completeMethod)="getSiteList()" field="name" [completeOnFocus]="true" [autocomplete]="''"
+            #site="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'"
+            [autoHighlight]="true" name="site" [dropdown]="true" appendTo="body" dataKey="id"
+            [style]="{'width': '100%' }" autocomplete="off" appendTo="body"
+            [undoStyleClass]="'p-button-text p-form-field-action-button'"
+            [clearStyleClass]="'p-button-text p-form-field-action-button'">
+            </p-riAutoComplete> 
+            </div>
+            <div class="flex column" *ngIf="dragEvent.agendaType.name === 'RIUNIONE'">
+                <label for="range">{{'agenda.project' | translate}}</label>
+                 <p-riAutoComplete [(ngModel)]="dragEvent.project" [suggestions]="projectList" [required]="true" [disabled]="disabledForm"
+                (completeMethod)="getProjectList()" field="name" [completeOnFocus]="true" [autocomplete]="''"
+                #site="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'"
+                [autoHighlight]="true" name="project" [dropdown]="true" appendTo="body" dataKey="id"
+                [style]="{'width': '100%' }" autocomplete="off" appendTo="body"
+                [undoStyleClass]="'p-button-text p-form-field-action-button'"
+                [clearStyleClass]="'p-button-text p-form-field-action-button'">
+                </p-riAutoComplete> 
+            </div>
+            <div style="width:198px"></div>
+        </div>    
+
+
+
+        <div class="col-12" *ngIf="dragEvent.note">
+            <label>{{'agenda.note' | translate}}</label>
+            <p class="note">{{dragEvent.note}}</p>
+        </div>
+        <div class="flex" *ngIf="typeFromSidebar !==  fromSidebar.OTHER">
+           <div class="flex col-6 column">
+            <div *ngIf="dragEvent.priority?.name">{{'agenda.priority' | translate}}: <strong>{{dragEvent.priority.name}}</strong></div>
+            <div>{{'agenda.estimateHour' | translate}}:
+                <strong *ngIf="dragEvent.estimate !== '0'">{{dragEvent.estimate}}</strong>
+                <strong *ngIf="dragEvent.estimate === '0'">{{ 'agenda.estimateNotPresent'  | translate }}</strong>
+            </div>
+           </div>
+           <div class="flex col-6 column">
+               <div>{{'agenda.currentStatus' | translate}}: <strong>{{dragEvent.status?.name}}</strong></div>
+               <div>{{'agenda.dueDate' | translate}}:
+                   <strong *ngIf="dragEvent.dueDate">{{dragEvent.dueDate | date: 'dd/MM/yyyy hh:mm'}}</strong>
+                   <strong *ngIf="!dragEvent.dueDate">{{ 'agenda.dueDateNotPresent'  | translate }}</strong>
+               </div>
+               <div>{{'agenda.plannedHour' | translate}}:
+                   <strong *ngIf="dragEvent.timeSpentInHour > 0">{{dragEvent.timeSpentInHour}}</strong>
+                   <strong *ngIf="dragEvent.timeSpentInHour === 0">{{ 'agenda.estimateNotPresent'  | translate }}</strong>
+                </div>
+           </div>
+        </div>
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-trash" class="trash p-button p-component p-button-icon-only" (click)="deleteEvent()" [disabled]="eventForm.invalid || disabledForm || dragEvent.agendaType?.id === 0 || !canRemove">
+                <span class="p-button-icon pi pi-trash" *ngIf="!loading"></span><span style="margin-left:5px" *ngIf="!loading">{{ 'agenda.deleteSingleEvent'  | translate }}</span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"><span *ngIf="!loading">{{ 'agenda.deleteSingleEvent'  | translate }}</span></i>
+            </button>
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only" (click)="createEvent()" [disabled]="eventForm.invalid || disabledForm || dragEvent.agendaType?.id === 0">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</div>
+
+
+<p-confirmDialog header="confirmationDelete" icon="pi pi-exclamation-triangle" #confirmationDelete key="confirmationDelete">
+</p-confirmDialog>
+
+
+<p-dialog
+[(visible)]="notHavePermission"
+[style]="{width: '50vw'}"
+[modal]="true"
+[closable]="false"
+class="singleEvent"
+*ngIf="notHavePermission">
+<ng-template pTemplate="header">
+  <div class="flex jira">
+    <div>
+      <span>{{'general.attention' | translate}}</span>
+    </div>
+    <div class="rightSideDialog">
+      <i class="fas fa-times" style="font-size: 22px" pTooltip="{{'agenda.close' | translate}}" (click)="notHavePermission = false"></i>
+    </div>
+  </div>
+</ng-template>
+<p>{{'agenda.errorChoiceDays' | translate}}</p>
+</p-dialog>

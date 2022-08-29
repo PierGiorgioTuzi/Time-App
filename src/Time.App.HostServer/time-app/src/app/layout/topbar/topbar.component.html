@@ -1,0 +1,68 @@
+<app-sidebar [sidebarStatus]="visibleSidebar" [activeLink]="activeLink" (updateStatus)="setStatus($event)"></app-sidebar>
+<div class="header">
+  <div class="flex" [ngClass]="{'grey': visibleSidebar, '' : !visibleSidebar }">
+    <div>
+      <i class="fas fa-bars" id="hamburger" (click)="openSidebar()"></i>
+      <a class="logo"><img src="assets/images/logo_time.png"></a>
+    </div>
+    <div>
+      <div class="user-block" (click)="op.toggle($event)">
+        <a class="link" style="color: white; padding-top:4px!important;margin-right: 7px;">
+<!--           <i class="fa-solid fa-grid"></i> -->
+           <i class="fas fa-th"></i>
+        </a>
+        <p-overlayPanel #op [showTransitionOptions]="'300ms'" [hideTransitionOptions]="'300ms'" [dismissable]="true"
+        [showCloseIcon]="false" [style]="{'width': '266px'}">
+          <ng-template pTemplate>
+           <div class="conteinerOverlayPanel-login">
+            <div class="logoRight">
+              {{userInitial()}}
+            </div>
+              <div class="userInformation">
+                <small>{{user.name}}</small>
+                <small>{{user.role}}</small>
+              </div>
+                
+            </div>
+            <div class="conteinerOverlayPanel-login options" (click)="openJira()">
+              <div class="logoRight">
+                <img src="\assets\images\jiratopbar.png">
+              </div>
+              <div class="userInformation">
+                JIRA
+              </div>
+            </div>
+            <button pButton pRipple type="button" style="height: 32px;" (click)="logout()" label="Logout"
+        class="p-button p-button-raised p-button-danger"></button>
+        <span>  <i class="fas fa-satellite-dish"></i> </span>
+          </ng-template>
+      </p-overlayPanel>
+      </div>
+<!--       <div class="black-block">
+        <span [ngClass]="{'active': language === 'it'}" (click)="changeLanguage('it')" title="Italiano">ITA</span>
+        <span [ngClass]="{'active': language === 'en'}" (click)="changeLanguage('en')" title="English">ENG</span>
+      </div> -->
+      <div class="radio">
+      <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="code" class="languages"
+        (ngModelChange)="translate(selectedLanguage)">
+        <ng-template pTemplate="selectedItem">
+          <div class="language-item language-item-value" *ngIf="selectedLanguage">
+            <img src='{{ "assets/flag/" + selectedLanguage.code + ".png"}}' class="selected-flag flag" />
+          </div>
+        </ng-template>
+        <ng-template let-languageSystem pTemplate="item">
+          <div class="language-item">
+            <img src='{{ "assets/flag/" + languageSystem.code + ".png"}}' class="flag" />
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+
+
+
+      <div class="black-block" style="width:200px" title="{{ todayDate | date: 'longDate': '+0200': language}}">
+        <span>{{ todayDate | date: 'longDate': '+0200': language}}</span>
+      </div>
+  </div>
+</div>

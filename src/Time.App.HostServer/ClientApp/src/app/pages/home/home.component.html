@@ -1,0 +1,327 @@
+<div class="topbar">
+  <app-topbar [activeLink]="activeLink"></app-topbar>
+</div>
+<div class="container-fluid">
+  <div class="pad col-9">
+    <p-accordion>
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="header-accordion">
+            <span>{{'agenda.filterCalendar' | translate}}</span>
+            <div class="lengthEvents">
+              <span style="font-size: 16px;font-variant: small-caps"
+                *ngIf="selectedUserForCalendar.length === 1 && selectedUserForCalendar.includes(user.userId) && selectedProjectForCalendar.length === 0 && selectedAgendaTypeForCalendar.length === 0">{{'agenda.defaultfilter'
+                | translate}}</span>
+              <span style="font-size: 16px;color:green;font-variant: small-caps"
+                *ngIf="selectedUserForCalendar.length !== 1 || selectedProjectForCalendar.length !== 0 || selectedAgendaTypeForCalendar.length !== 0 || !selectedUserForCalendar.includes(user.userId) ">{{'agenda.activeFilter'
+                | translate}}</span>
+            </div>
+          </div>
+        </ng-template>
+        <div class="p-grid filters">
+          <div>
+            <p-multiSelect [options]="userList" [(ngModel)]="selectedUserForCalendar" optionLabel="name"
+              optionValue="id" defaultLabel="{{'agenda.userStatus' | translate}}"
+              selectedItemsLabel="{{selectedItemsLabelUserForCalendar}}"
+              (onChange)="updateFilterForPersonalTask($event)"></p-multiSelect>
+            <button pButton type="button" class="userFilterButton" label="{{'agenda.reset' | translate}}"
+              (click)="selectedUserForCalendar = [user.userId];updateFilterForPersonalTask($event)"
+              [disabled]="checkUserCalendarFilter()"></button>
+          </div>
+          <div>
+            <p-multiSelect [options]="projectList" [(ngModel)]="selectedProjectForCalendar" optionLabel="name"
+              optionValue="id" defaultLabel="{{'agenda.projectStatus' | translate}}"
+              selectedItemsLabel="{{selectedItemsLabelProjectForCalendar}}" (onChange)="updateFilterForPersonalTask()">
+            </p-multiSelect>
+            <button pButton type="button" class="userFilterButton"
+              (click)="selectedProjectForCalendar = [];updateFilterForPersonalTask($event)"
+              label="{{'agenda.reset' | translate}}" [disabled]="selectedProjectForCalendar.length === 0 "></button>
+          </div>
+          <div>
+            <p-multiSelect [options]="agendaTypeList" [(ngModel)]="selectedAgendaTypeForCalendar" optionLabel="name"
+              optionValue="id" defaultLabel="{{'agenda.agendaTypeStatus' | translate}}"
+              selectedItemsLabel="{{selectedItemsLabelAgendaTypeForCalendar}}"
+              (onChange)="updateFilterForPersonalTask()"></p-multiSelect>
+            <button pButton type="button" class="userFilterButton"
+              (click)="selectedAgendaTypeForCalendar = [];updateFilterForPersonalTask($event)"
+              label="{{'agenda.reset' | translate}}" [disabled]="selectedAgendaTypeForCalendar.length === 0 "></button>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+    <div class="containerToggle">
+    <p-toggleButton #toggle id="toggle" [onLabel]="'Weekend ON'" class="weekend"
+      [style]="{'width' : '150px', 'font-size' : '12px', 'padding': '9px'}" [offLabel]="'Weekend OFF'"
+      [onIcon]="'pi pi-check'" (click)="toggleWeekend()" (onChange)="toggleWeekend()" offIcon="pi pi-times" [(ngModel)]="weekend">
+    </p-toggleButton>
+    </div>
+    <div>
+      <full-calendar style="margin-top:10px" id="time"></full-calendar>
+    </div>
+  </div>
+  <div style="width:100%">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark filterss"
+      style="width: 100%;height: 100%;background-color: #F0F0F0!important;">
+      <div>
+        <div class="legendHead">
+          <div class="legend">
+            <div class="square todo">
+            </div>
+            <div>TO DO</div>
+          </div>
+          <div class="legend">
+            <div class="square wip">
+            </div>
+            <div>WIP</div>
+          </div>
+          <div class="legend">
+            <div class="square planned">
+            </div>
+            <div>PLANNED</div>
+          </div>
+          <div class="legend">
+            <div class="square finished">
+            </div>
+            <div>FINISHED</div>
+          </div>
+          <div class="legend">
+            <div class="square closed">
+            </div>
+            <div>CLOSED</div>
+          </div>
+          <div class="legend">
+            <div class="square open">
+            </div>
+            <div>OPEN</div>
+          </div>
+        </div>
+        <p-accordion>
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="header-accordion">
+                <span>{{'agenda.filter' | translate}}</span>
+                <div class="lengthEvents">
+                  <span style="font-size: 16px;font-variant: small-caps"
+                    *ngIf="selectedUser.length === 1 && selectedStatus.length === 3 && selectedProject.length === 0 && selectedUser.includes(user.userId)">{{'agenda.defaultfilter'
+                    | translate}}</span>
+                  <span style="font-size: 16px;color:green;font-variant: small-caps"
+                    *ngIf="selectedUser.length !== 1 || selectedStatus.length !== 3 || selectedProject.length !== 0 || !selectedUser.includes(user.userId)">{{'agenda.activeFilter'
+                    | translate}}</span>
+                </div>
+              </div>
+            </ng-template>
+            <div class="filter">
+              <button pButton type="button" class="userFilterButton"
+                (click)="selectedUser = [user.userId];loadEventSidebar($event, true)"
+                label="{{'agenda.reset' | translate}}" [disabled]="checkUserSidebarFilter()"></button>
+            </div>
+            <div class="margBott">
+              <p-multiSelect [options]="userList" [(ngModel)]="selectedUser" optionLabel="name" optionValue="id"
+                defaultLabel="{{'agenda.userStatus' | translate}}" selectedItemsLabel="{{selectedItemsLabelUser}}"
+                (onChange)="loadEventSidebar($event, false)"></p-multiSelect>
+            </div>
+            <div class="margBott">
+              <p-multiSelect [options]="statusList" [(ngModel)]="selectedStatus" optionLabel="name" optionValue="id"
+                defaultLabel="{{'agenda.filterStatus' | translate}}" selectedItemsLabel="{{selectedItemsLabel}}"
+                (onChange)="loadEventSidebar($event, false)"></p-multiSelect>
+            </div>
+            <div class="margBott">
+              <p-multiSelect [options]="projectList" [(ngModel)]="selectedProject" optionLabel="name" optionValue="id"
+                defaultLabel="{{'agenda.projectStatus' | translate}}" selectedItemsLabel="{{selectedItemsProjectLabel}}"
+                (onChange)="loadEventSidebar($event, false)"></p-multiSelect>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+        <ng-container *ngIf="!loadForm">
+          <div class="flex center column" style="text-align: center">
+            <p-progressSpinner></p-progressSpinner>
+            <p>{{ 'spinner.loading' | translate}}</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="loadForm">
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto" id="list">
+            <p-accordion>
+              <!-- supportTaskList -->
+              <div *ngIf="supportTaskList?.length > 0" class="custom-accordion">
+                <p-accordionTab class="custom-accordion" *ngFor="let sla of numberPriority">
+                  <ng-template pTemplate="header">
+                    <div class="header-accordion">
+                      <span>{{'agenda.support' | translate}}: {{supportTaskList[sla][0].extendedProps.element.sla}}
+                        {{'agenda.hour' | translate}} </span>
+                      <div class="lengthEvents">
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.TODO) > 0">{{'agenda.TODO' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.TODO)}}</span>
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.WIP) > 0">{{'agenda.WIP' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.WIP)}}</span>
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.PLANNED) > 0">{{'agenda.PLANNED' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.PLANNED)}}</span>
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.CLOSED) > 0">{{'agenda.CLOSED' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.CLOSED)}}</span>
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.FINISHED) > 0">{{'agenda.FINISHED' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.FINISHED)}}</span>
+                        <span *ngIf="lengthSupport(supportTaskList[sla],statusENUM.OPEN) > 0">{{'agenda.OPEN' | translate}}:
+                          {{lengthSupport(supportTaskList[sla],statusENUM.OPEN)}}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <li class="nav-item">
+                    <div *ngFor="let project of supportTaskList[sla];let i = index" id="project{{i}}"
+                      [attr.data-event]="setProjectJSON(project)" pTooltip="{{project.extendedProps.element.note}}"
+                      tooltipPosition="top" class="cool-event" [ngClass]="setTaskColor(project)"
+                      (click)="openEvent(project)">
+                      <div>
+                        <small class="statusString">{{project.extendedProps.element.status?.name}}</small>
+                        <small>{{project.extendedProps.element.user?.name}}</small>
+                        <p class="projectName">{{project.extendedProps.element.project?.name}}</p>
+                        <p>{{project.extendedProps.element.name}}</p>
+                        <div class="dueEstimate">
+                          <p *ngIf="project.extendedProps.element.dueDate"><span>{{ 'agenda.expirationDate' |
+                              translate}}:
+                            </span>{{project.extendedProps.element.dueDate | date: 'dd/MM/yyyy'}}</p>
+                          <p *ngIf="!project.extendedProps.element.dueDate"><span>{{ 'agenda.expirationDate' |
+                              translate}}:
+                            </span>{{'agenda.dueDateEmpty' | translate}}</p> -
+                          <p *ngIf="project.extendedProps.element.estimate !== '0'"><span>{{ 'agenda.estimate' |
+                              translate}}(H): </span>{{project.extendedProps.element.estimate}}</p>
+                          <p *ngIf="project.extendedProps.element.estimate === '0'"><span>{{ 'agenda.estimate' |
+                              translate}}(H): </span>{{ 'agenda.estimateNotPresent' | translate}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </p-accordionTab>
+              </div>
+              <!-- projectTaskList -->
+              <p-accordionTab class="custom-accordion" *ngIf="projectTaskList.length > 0">
+                <ng-template pTemplate="header">
+                  <div class="header-accordion">
+                    <span>{{'agenda.project' | translate}}</span>
+                    <div class="lengthEvents">
+                      <span *ngIf="lengthProject('projectTaskList', statusENUM.TODO) !== 0">{{'agenda.TODO' |translate}}:
+                        {{lengthProject('projectTaskList', statusENUM.TODO)}}</span>
+                      <span *ngIf="lengthProject('projectTaskList', statusENUM.WIP) !== 0">{{'agenda.WIP' | translate}}:
+                        {{lengthProject('projectTaskList', statusENUM.WIP)}}</span>
+                      <span *ngIf="lengthProject('projectTaskList', statusENUM.PLANNED) !== 0">{{'agenda.PLANNED' | translate}}:
+                        {{lengthProject('projectTaskList', statusENUM.PLANNED)}}</span>
+                      <span *ngIf="lengthProject('projectTaskList', statusENUM.CLOSED) !== 0">{{'agenda.CLOSED' | translate}}:
+                        {{lengthProject('projectTaskList', statusENUM.CLOSED)}}</span>
+                      <span *ngIf="lengthProject('projectTaskList',statusENUM.FINISHED) > 0">{{'agenda.FINISHED' | translate}}:
+                        {{lengthProject('projectTaskList',statusENUM.FINISHED)}}</span>
+                      <span *ngIf="lengthProject('projectTaskList',statusENUM.OPEN) > 0">{{'agenda.OPEN' | translate}}:
+                        {{lengthProject('projectTaskList',statusENUM.OPEN)}}</span>
+                    </div>
+                  </div>
+                </ng-template>
+                <li class="nav-item">
+                  <div *ngFor="let project of projectTaskList;let i = index" id="project{{i}}"
+                    [attr.data-event]="setProjectJSON(project)" pTooltip="{{project.extendedProps.element.note}}"
+                    tooltipPosition="top" class="cool-event" [ngClass]="setTaskColor(project)"
+                    (click)="openEvent(project)">
+                    <div>
+                      <small class="statusString">{{project.extendedProps.element.status?.name}}</small>
+                      <small>{{project.extendedProps.element.user?.name}}</small>
+                      <p class="projectName">{{project.extendedProps.element.project?.name}}</p>
+                      <p>{{project.extendedProps.element.name}}</p>
+                      <div class="dueEstimate">
+                        <p *ngIf="project.extendedProps.element.dueDate"><span>{{ 'agenda.expirationDate' | translate}}:
+                          </span>{{project.extendedProps.element.dueDate | date: 'dd/MM/yyyy'}}</p>
+                        <p *ngIf="!project.extendedProps.element.dueDate"><span>{{ 'agenda.expirationDate' |
+                            translate}}: </span>{{'agenda.dueDateEmpty' | translate}}</p> -
+                        <p *ngIf="project.extendedProps.element.estimate !== '0'"><span>{{ 'agenda.estimate' |
+                            translate}}(H): </span>{{project.extendedProps.element.estimate}}</p>
+                        <p *ngIf="project.extendedProps.element.estimate === '0'"><span>{{ 'agenda.estimate' |
+                            translate}}(H): </span>{{ 'agenda.estimateNotPresent' | translate}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </p-accordionTab>
+              <!-- other -->
+              <p-accordionTab header="{{'agenda.other' | translate}}" class="custom-accordion"
+                *ngIf="otherTaskList.length > 0">
+                <li class="nav-item">
+                  <div *ngFor="let project of otherTaskList;let i = index" id="other{{i}}"
+                    [attr.data-event]="setProjectJSON(project)" pTooltip="{{project.extendedProps.element.note}}"
+                    tooltipPosition="top" class="cool-event other" [ngClass]="setTaskColor(project)"
+                    (click)="openEvent(project)">
+                    <div>
+                      <p class="projectName">{{project.extendedProps.element.project?.name}}</p>
+                      <p>{{project.extendedProps.element.name}}</p>
+                    </div>
+                  </div>
+                </li>
+              </p-accordionTab>
+            </p-accordion>
+            <li>
+              <div></div>
+            </li>
+          </ul>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+  <div [ngStyle]="{'left.px': rightMenuX, 'top.px': rightMenuY}" class="rightMenu" *ngIf="rightActive"
+    (clickOutside)="rightActive = false">
+    <ul>
+      <!--  <li (click)="openEventFromRightSidebar()">
+        {{'agenda.updateElement' | translate}}
+      </li> -->
+      <li (click)="deleteAllTask()">
+        {{'agenda.removeElement' | translate}}
+      </li>
+    </ul>
+  </div>
+
+  <p-dialog [(visible)]="singleEventBoolean" [style]="{width: '50vw'}" [modal]="true" [closable]="false"
+    class="singleEvent" *ngIf="singleEventBoolean">
+    <ng-template pTemplate="header">
+      <div class="flex jira">
+        <img src="assets/images/jiralogo.png" *ngIf="singleEvent.jira?.key" pTooltip="{{'agenda.jira' | translate}}"
+          (click)="goToJiraEvent()">
+        <div>
+          <span> <span *ngIf="singleEvent.jira?.key">{{singleEvent.jira.key}} -</span> {{singleEvent.name}}</span>
+        </div>
+        <div class="rightSideDialog">
+          <i class="fas fa-times" style="font-size: 22px" pTooltip="{{'agenda.close' | translate}}"
+            (click)="closeSingleEventFromHeader()"></i>
+        </div>
+      </div>
+      <hr>
+    </ng-template>
+    <app-event-form (closed)="closeSingleEvent($event)" [canRemove]="canRemove" [event]="singleEvent" [isEditMode]="isEditMode"
+      [typeFromSidebar]="typeFromSidebar" [user]="user" [disabledForm]="disableForm" [weekend]="weekend"
+      [calendarEvents]="events"></app-event-form>
+  </p-dialog>
+
+  <p-dialog [(visible)]="notHavePermission" [style]="{width: '50vw'}" [modal]="true" [closable]="false"
+    class="singleEvent" *ngIf="notHavePermission">
+    <ng-template pTemplate="header">
+      <div class="flex jira">
+        <div>
+          <span>{{'general.attention' | translate}}</span>
+        </div>
+        <div class="rightSideDialog">
+          <i class="fas fa-times" style="font-size: 22px" pTooltip="{{'agenda.close' | translate}}"
+            (click)="closeNotHavePermission()"></i>
+        </div>
+      </div>
+
+    </ng-template>
+    <p>{{'agenda.notHavePermission' | translate}}</p>
+  </p-dialog>
+
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" #confirmation key="confirmation">
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-check" label="{{'agenda.deleteSingleEvent' | translate}}"
+        (click)="deleteSingleEvent();confirmation.reject()"></button>
+      <button type="button" pButton icon="pi pi-check" label="{{'agenda.deleteAllEvent' | translate}}"
+        *ngIf="deleteAllVisibleButton" (click)="confirmation.accept()"></button>
+      <button type="button" pButton icon="pi pi-times" label="{{'general.annull' | translate}}"
+        (click)="confirmation.reject()"></button>
+    </ng-template>
+  </p-confirmDialog>
+
+  <p-toast position="top-center"></p-toast>

@@ -1,0 +1,506 @@
+<div class="topbar">
+    <app-topbar [activeLink]="activeLink"></app-topbar>
+</div>
+<div class="container-fluid">
+    <div class="header-title">
+        <div class="table-container">
+            <ng-container *ngIf="loadForm">
+                <button pButton type="button" (click)="back()"><i class="fa-solid fa-arrow-left"></i> <span
+                        style="padding-left: 10px">{{'general.back' | translate}}</span></button>
+                <!-- inizio impiegato -->
+                <h4 *ngIf="tableType === tableTypeENUM.USERS">{{'registry.users' | translate}}</h4>
+                <p-table
+                (onLazyLoad)="setTable($event)"
+                [value]="datasource?.list"
+                [rowsPerPageOptions]="[10,20,50]"
+                [rows]="20"
+                [globalFilterFields]="['name','jobTitle']"
+                responsiveLayout="scroll"
+                [resizableColumns]="true"
+                *ngIf="tableType === tableTypeENUM.USERS"
+                [totalRecords]="totalRecords"
+                [paginator]="true"
+                [scrollable]="true"
+                [loading]="loading"
+                [lazy]="true"
+                #employee>
+                     <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar"> <!-- [(ngModel)]="searchString"  (input)="employee.filterGlobal($event.target.value, 'contains')"-->
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchNameOrMantion' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template> 
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 100%;height: 34px">
+                            </th>
+                            <th pResizableColumn pSortableColumn="name">{{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pResizableColumn pSortableColumn="jobTitle">{{'registry.jobTitle' | translate}}<p-sortIcon field="jobTitle"></p-sortIcon></th>
+                            <th pResizableColumn pSortableColumn="employeesType.name">{{'registry.description' | translate}}<p-sortIcon field="employeesType.name"></p-sortIcon></th>
+                            <th pResizableColumn pSortableColumn="role.name">{{'registry.role' | translate}}<p-sortIcon field="role.name"></p-sortIcon></th>
+                            <th pResizableColumn pSortableColumn="active">{{'registry.active' | translate}}<p-sortIcon field="active"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employe>
+                        <tr>
+                            <td style="width: 60px;">
+                                <button (click)="openForm(employe)" type="button" icon="fa-solid fa-pen"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-pen"></span>
+                                </button>
+                                <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                <span class="p-button-icon fa-solid fa-trash-can"></span>
+                            </button>
+                            </td>
+                            <td>{{employe.name}}</td>
+                            <td>{{employe.jobTitle}}</td>
+                            <td>{{employe.employeesType?.name}}</td>
+                            <td>{{employe.role?.name}}</td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.active"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.active"></i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- fine impiegato -->
+                <!-- inizio tipo impiegato -->
+                 <h4 *ngIf="tableType === tableTypeENUM.USERTYPE">{{'registry.usersType' | translate}}</h4>
+                <p-table
+                (onLazyLoad)="setTable($event)"
+                [value]="datasource?.list"
+                [lazy]="true"
+                [loading]="loading"
+                [scrollable]="true"
+                [totalRecords]="totalRecords"
+                [rowsPerPageOptions]="[10,20,50]"
+                [rows]="20"
+                responsiveLayout="scroll"
+                *ngIf="tableType === tableTypeENUM.USERTYPE"
+                [paginator]="true"
+                [resizableColumns]="true"
+                columnResizeMode="expand"
+                [globalFilterFields]="['name']"
+                #employee>
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 100%;height: 34px"></th>
+                            <th pResizableColumn pSortableColumn="name">{{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                            <th style="width: 200px;" pResizableColumn pSortableColumn="active">{{'registry.active' | translate}}<p-sortIcon field="active"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employe>
+                        <tr>
+                            <td style="width: 60px;">
+                                <button (click)="openForm(employe)" type="button" icon="fa-solid fa-pen"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-pen"></span>
+                                </button>
+                                <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                <span class="p-button-icon fa-solid fa-trash-can"></span>
+                            </button>
+                            </td>
+                            <td>{{employe.name}}</td>
+                            <td style="width: 200px">
+                                <i class="fa-solid fa-check" *ngIf="employe.active"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.active"></i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- fine tipo impiegato-->
+                <!-- inizio task -->
+                <h4 *ngIf="tableType === tableTypeENUM.TASK">{{'registry.task' | translate}}</h4>
+                 <p-table
+                 (onLazyLoad)="setTable($event)"
+                 [value]="datasource?.list"
+                 [lazy]="true"
+                 [loading]="loading"
+                 [scrollable]="true"
+                 [totalRecords]="totalRecords"
+                 responsiveLayout="scroll"
+                 *ngIf="tableType === tableTypeENUM.TASK"
+                 [rowsPerPageOptions]="[10,20,50]"
+                 [paginator]="true"
+                 [rows]="20"
+                 [globalFilterFields]="['name']"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 #employee>
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text"  (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 100%;height: 34px">
+                            </th>
+                            <th pResizableColumn pSortableColumn="name" >{{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pResizableColumn pSortableColumn="agendaType.name" style="width: 200px;">{{'agenda.agendaType' | translate}}<p-sortIcon field="agendaType.name"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employe>
+                        <tr>
+                            <td style="width: 30px;">
+                                <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-trash-can"></span>
+                                </button>
+                            </td>
+                            <td>{{employe.name}}</td>
+                            <td style="width: 400px;">{{employe.agendaType?.name}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- fine task -->
+                <!-- inizio ruoli -->
+                <h4 *ngIf="tableType === tableTypeENUM.ROLES">{{'registry.roles' | translate}}</h4>
+                <p-table
+                (onLazyLoad)="setTable($event)"
+                [value]="datasource?.list"
+                [lazy]="true"
+                [loading]="loading"
+                [scrollable]="true"
+                [totalRecords]="totalRecords"
+                responsiveLayout="scroll"
+                *ngIf="tableType === tableTypeENUM.ROLES"
+                id="roles"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10,20,50]"
+                [rows]="20"
+                [globalFilterFields]="['name']"
+                [resizableColumns]="true"
+                columnResizeMode="expand"
+                #employee> 
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 100%;height: 34px"></th>
+                            <th pResizableColumn pSortableColumn="name">{{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                            <th style="width: 90px" pResizableColumn pSortableColumn="level">{{'registry.level' | translate}}<p-sortIcon field="level"></p-sortIcon></th>
+                            <th pResizableColumn>{{'registry.employeeAssigne' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeSameLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeOverLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeUnderLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canModifySameLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canModifyOverLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canModifyUnderLevel' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeAndModifyRegistry' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeAndModifyCosts' | translate}}</th>
+                            <th pResizableColumn>{{'registry.canSeeAndModifyInsertControl' | translate}}</th>
+                            <th pResizableColumn>{{'registry.active' | translate}}</th>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employe>
+                        <tr>
+                            <td style="width: 60px;">
+                                <button (click)="openForm(employe)" type="button" icon="fa-solid fa-pen"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-pen"></span>
+                                </button>
+                                <button type="button" icon="fa-solid fa-trash-can" [disabled]="employe.numberEmployees > 0" (click)="deleteEmployes(employe)"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-trash-can"></span>
+                                </button>
+                            </td>
+                            <td>{{employe.name}}</td>
+                            <td  style="width: 90px">{{employe.level}}</td>
+                             <td (click)="getRoleListNames(employe.roleId)" class="roleList">({{employe.numberEmployees}})</td> 
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeSameLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeSameLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeOverLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeOverLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeUnderLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeUnderLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canModifySameLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canModifySameLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canModifyOverLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canModifyOverLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canModifyUnderLevel"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canModifyUnderLevel"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeAndModifyRegistry"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeAndModifyRegistry"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeAndModifyCosts"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeAndModifyCosts"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.canSeeAndModifyInsertControl"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canSeeAndModifyInsertControl"></i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-check" *ngIf="employe.active"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.active"></i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- fine ruoli-->
+                <!-- inizio TASKTYPE -->
+                <h4 *ngIf="tableType === tableTypeENUM.TASKTYPE">{{'registry.typeTask' | translate}}</h4>
+                 <p-table
+                 (onLazyLoad)="setTable($event)"
+                 [value]="datasource?.list"
+                 [lazy]="true"
+                 [loading]="loading"
+                 [scrollable]="true"
+                 [totalRecords]="totalRecords"
+                 responsiveLayout="scroll"
+                 *ngIf="tableType === tableTypeENUM.TASKTYPE"
+                 [paginator]="true"
+                 [rowsPerPageOptions]="[10,20,50]"
+                 [rows]="20"
+                 [globalFilterFields]="['name']"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 #employee>
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 100%;height: 34px"></th>
+                            <th pResizableColumn pSortableColumn="name"> {{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                            <th pResizableColumn style="width: 50px">{{'registry.active' | translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-employe>
+                        <tr>
+                            <td style="width: 60px;">
+                                <button (click)="openForm(employe)" type="button" icon="fa-solid fa-pen"
+                                    class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                    <span class="p-button-icon fa-solid fa-pen"></span>
+                                </button>
+                                <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                <span class="p-button-icon fa-solid fa-trash-can"></span>
+                            </button>
+                            </td>
+                            <td >{{employe.name}}</td>
+                            <td style="width: 50px">
+                                <i class="fa-solid fa-check" *ngIf="employe.active"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.active"></i>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- fine TASKTYPE -->
+                <!-- inizio SITE -->
+                 <h4 *ngIf="tableType === tableTypeENUM.SITE">{{'registry.site' | translate}}</h4>
+                 <p-table
+                 (onLazyLoad)="setTable($event)"
+                 [value]="datasource?.list"
+                 [lazy]="true"
+                 [loading]="loading"
+                 [scrollable]="true"
+                 [totalRecords]="totalRecords"
+                 responsiveLayout="scroll"
+                 *ngIf="tableType === tableTypeENUM.SITE"
+                 [paginator]="true"
+                 [rowsPerPageOptions]="[10,20,50]"
+                 [rows]="20"
+                 [globalFilterFields]="['name']"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 #employee>
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                     <ng-template pTemplate="header">
+                         <tr>
+                            <th style="width: 100%;height: 34px"></th>
+                             <th pResizableColumn pSortableColumn="name"> {{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                         </tr>
+                     </ng-template>
+                     <ng-template pTemplate="body" let-employe>
+                         <tr>
+                             <td style="width: 60px;">
+                                 <button (click)="openForm(employe)" type="button" icon="fa-solid fa-pen"
+                                     class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                     <span class="p-button-icon fa-solid fa-pen"></span>
+                                 </button>
+                                 <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                     class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                     <span class="p-button-icon fa-solid fa-trash-can"></span>
+                                 </button>
+                             </td>
+                             <td>{{employe.name}}</td>
+                         </tr>
+                     </ng-template>
+                 </p-table>
+                 <!-- fine SITE -->
+                 <!-- inizio PERSONALCOST -->
+                 <h4 *ngIf="tableType === tableTypeENUM.PERSONALCOST">{{'registry.personalCost' | translate}}</h4>
+                 <p-table
+                 (onLazyLoad)="setTable($event)"
+                 [value]="datasource?.list"
+                 [lazy]="true"
+                 [loading]="loading"
+                 [scrollable]="true"
+                 [totalRecords]="totalRecords"
+                 responsiveLayout="scroll"
+                 *ngIf="tableType === tableTypeENUM.PERSONALCOST"
+                 [paginator]="true"
+                 [rowsPerPageOptions]="[10,20,50]"
+                 [rows]="20"
+                 [globalFilterFields]="['name']"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 #employee>
+                    <ng-template pTemplate="caption">
+                        <div class="flex search-bar">
+                            <button pButton type="button" title=" {{'general.new' | translate}}" (click)="openNewForm()" 
+                                label=" {{'general.new' | translate}}" pButton pRipple icon="pi pi-plus" class="p-button dark lightBlue button-new">
+                            </button>
+                            <div class="p-inputgroup white-background searchBar">
+                                <span style="padding:0" class="p-inputgroup-addon"><i style="font-size: 20px;" class="fas fa-search"></i></span>
+                                <input class="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="{{'registry.searchName' | translate}}" />
+                            </div>
+                        </div>
+                    </ng-template>
+                     <ng-template pTemplate="header">
+                         <tr>
+                            <th style="width: 100%; height: 34px"></th>
+                             <th pResizableColumn pSortableColumn="name"> {{'registry.name' | translate}}<p-sortIcon field="name"></p-sortIcon></th>
+                             <th pResizableColumn style="width: 50px"> {{'registry.enableEditing' | translate}}</th>
+                             <th pResizableColumn style="width: 50px"> {{'registry.enableEditingThirdParts' | translate}}</th>
+                         </tr>
+                     </ng-template>
+                     <ng-template pTemplate="body" let-employe>
+                         <tr>
+                             <td style="width: 60px;">
+                                 <button type="button" icon="fa-solid fa-trash-can" (click)="deleteEmployes(employe)"
+                                     class="p-button-rounded p-button-text p-mr-2 p-buttonHeader p-button p-component p-button-icon-only">
+                                     <span class="p-button-icon fa-solid fa-trash-can"></span>
+                                 </button>
+                             </td>
+                             <td>{{employe.name}}</td>
+                             <td> 
+                                <i class="fa-solid fa-check" *ngIf="employe.canModifyForWorker"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canModifyForWorker"></i>
+                            </td>
+                            <td> 
+                                <i class="fa-solid fa-check" *ngIf="employe.canModifyForThirdPart"></i>
+                                <i class="fa-solid fa-x" *ngIf="!employe.canModifyForThirdPart"></i>
+                            </td>
+                         </tr>
+                     </ng-template>
+                 </p-table>
+                 <!-- fine PERSONALCOST -->
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
+<!-- inizio registry-table-form -->
+<p-dialog [(visible)]="activeForm" [style]="{width: '50vw'}" [modal]="true" [closable]="true" *ngIf="activeForm">
+    <ng-template pTemplate="header">
+        <div class="flex jira">
+            <div>
+                <h4 *ngIf="tableType === tableTypeENUM.USERS">{{'registry.employee' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.TASK">{{'registry.task' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.USERTYPE">{{'registry.usersType' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.ROLES">{{'registry.role' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.TASKTYPE">{{'registry.typeTask' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.SITE">{{'registry.site' | translate}}</h4>
+                <h4 *ngIf="tableType === tableTypeENUM.PERSONALCOST">{{'registry.personalCost' | translate}}</h4>
+            </div>
+        </div>
+    </ng-template>
+    <app-registry-tables-form [form]="objectToEdit" [tableType]="tableType" (close)="closeForm($event)"
+        [isEditMode]="isEditMode" *ngIf="activeForm">
+    </app-registry-tables-form>
+</p-dialog>
+<!--  fine registry-table-form  -->
+
+
+<!-- inizio Lista utenti Role -->
+<p-dialog [(visible)]="roleNameActiveForm" [style]="{width: '50vw', maxHeight: '800px'}" [modal]="true" [closable]="true" *ngIf="roleNameActiveForm">
+    <ng-template pTemplate="header">
+        <div class="flex jira">
+            <div>
+                <h4>{{'registry.employeeAssigne' | translate}}</h4>
+            </div>
+        </div>
+    </ng-template>
+    <ul *ngIf="roleListNames.length > 0">
+       <li *ngFor="let name of roleListNames">
+        {{name}}
+        </li> 
+    </ul>
+    <p *ngIf="roleListNames.length === 0">{{'registry.noEmployeeAssigne' | translate}}</p>
+</p-dialog>
+<!-- fine Lista utenti Role -->
+
+
+<p-toast position="top-center"></p-toast>
+
+
+<p-confirmDialog header="delete" icon="pi pi-exclamation-triangle" #delete key="delete">

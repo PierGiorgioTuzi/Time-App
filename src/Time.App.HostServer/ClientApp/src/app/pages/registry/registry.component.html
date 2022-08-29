@@ -1,0 +1,17 @@
+<div class="topbar">
+    <app-topbar [activeLink]="activeLink"></app-topbar>
+  </div>
+<div class="container-fluid">
+    <div class="side" style="height:93.9vh">
+    </div>
+    <div class="header-title">
+        <h1 style="padding-left:10px">{{'registry.title' | translate}}</h1>
+        <div class="block" (click)="goTo(tableTypeENUM.USERS)"><i class="pi pi-user"></i><span>{{'registry.users' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.USERTYPE)"><i class="pi pi-briefcase"></i><span>{{'registry.usersType' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.ROLES)"><i class="pi pi-sort-amount-up-alt"></i><span>{{'registry.roles' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.TASK)"><i class="pi pi-folder-open"></i><span>{{'registry.task' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.TASKTYPE)"><i class="pi pi-sitemap"></i><span>{{'registry.typeTask' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.SITE)"><i class="pi pi-images"></i><span>{{'registry.site' | translate}}</span></div>
+        <div class="block" (click)="goTo(tableTypeENUM.PERSONALCOST)"><i class="pi pi-wallet"></i><span>{{'registry.personalCost' | translate}}</span></div>
+    </div>
+</div>

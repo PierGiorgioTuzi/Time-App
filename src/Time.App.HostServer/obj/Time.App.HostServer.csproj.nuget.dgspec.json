@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/Time.App.HostServer.csproj": {}
+  },
+  "projects": {
+    "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/Time.App.HostServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/Time.App.HostServer.csproj",
+        "projectName": "Time.App.HostServer",
+        "projectPath": "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/Time.App.HostServer.csproj",
+        "packagesPath": "/Users/webster.velasco/.nuget/packages/",
+        "outputPath": "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/webster.velasco/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/rilab/_packaging/ri-pack/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.300/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "wikiUrl":"",
+    "supportUrl":"",
+    "apiEndpoint":"https://localhost:44365",
+    "authUrl": "https://svr-dev.retailitaliasrl.it/time/app/login",
+    "returnUrl": "http://localhost:4200",
+    "imagesRepositoryUrl": "",
+    "images3dRepositoryUrl": "",
+    "seqLoggerEndpoint": "",
+    "loggingEnabled": false
+  }
+  

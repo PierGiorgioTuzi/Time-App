@@ -1,0 +1,312 @@
+li {
+    margin-bottom: 10px;
+}
+li a {
+    color: black;
+    font-weight: 400;
+    font-size: 19px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: Nunito, sans-serif;
+    letter-spacing: 1px;
+    transition: left 1s;
+}
+li:hover a {
+    color: #2196f3;
+    position: relative;
+    left: 5px
+}
+.grey {
+    background: rgba(0, 0, 0, 0.4);
+    height: 56px;
+}
+.header {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    z-index: 3;
+    background-color: rgb(234 234 234);
+    height: 3rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 15px rgb(0 0 0 / 4%), 0 1px 6px rgb(0 0 0 / 4%);
+    background: rgb(240 240 240);
+    height: 56px;
+    padding: 1.5rem 0;
+    box-shadow: 0 1px 15px rgb(0 0 0 / 10%), 0 1px 8px rgb(0 0 0 / 10%);
+}
+.header .flex {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+    overflow: visible;
+}
+:host ::ng-deep .grey .radio,
+:host ::ng-deep .grey .user-block,
+:host ::ng-deep .grey .black-block {
+    z-index: -1;
+}
+.radio {
+    padding: 0;
+    margin-right: 12px;
+    border-radius: 4px;
+    color: #626262;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    box-sizing: border-box;
+    width: 75px;
+    font-size: 16px;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+:host ::ng-deep .radio .p-dropdown.p-component {
+    background: black;
+    border: 0;
+    box-shadow: 1px 1px 1px 1px grey;
+    border-radius: 4px;
+    margin-top: 0;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+:host ::ng-deep .pi {
+    color: black;
+    font-size: 13px;
+}
+:host ::ng-deep .p-dropdown-trigger .pi {
+    color: white;
+}
+:host ::ng-deep .radio .p-element {
+    background: transparent;
+    border: 0;
+    border-radius: 12px;
+}
+:host ::ng-deep .radio .p-dropdown {
+    background: transparent;
+}
+:host ::ng-deep .p-dropdown-items .p-element {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0;
+}
+:host ::ng-deep .p-dropdown-items .p-element:first-child {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0;
+}
+:host ::ng-deep .p-dropdown-items-wrapper {
+    padding: 4px 0;
+}
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+    margin-right: 5px;
+    width: 25px;
+} 
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 3px;
+    flex-direction: column;
+    padding: 2px 0;
+} 
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items img {
+    width: 40px;
+} 
+:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none!important;
+}
+.fa-bars {
+    background-color: initial;
+    color: #3a3a3a;
+    width: 36px;
+    height: 36px;
+    font-size: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.header a.logo {
+    font-size: 25px;
+    font-weight: 700;
+    padding: 0;
+    position: relative;
+    top: 1px;
+    margin-left: 16px;
+}
+.header .logo img {
+    width: 100%;
+    height: 40px;
+}
+.header i:hover {
+    cursor: pointer;
+    color: var(--blue)
+}
+.flex div:first-child {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.flex > div {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px
+}
+.header .flex > div {
+    gap:0;
+    grid-gap:0
+}
+.flex {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+}
+.black-block {
+    background: rgb(24 25 27);
+    padding: 10px;
+    display: flex;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    height: 30px;
+    box-sizing: border-box;
+    width: 110px;
+    font-size: 16px;
+    justify-content: space-evenly !important;
+    box-shadow: 1px 1px 1px 1px grey;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.black-block span {
+    font-size: 15px;
+    color: rgb(255 255 255);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.black-block span:hover {
+    cursor: pointer;
+    color: var(--blue)
+}
+span.active {
+    color: var(--blue)
+}
+.jira:hover {
+    cursor: pointer;
+}
+.black-block:first-child span:not(.active) {
+    color: #626262;
+}
+:host ::ng-deep .p-component-overlay {
+    z-index: 400;
+}
+.user-block a {
+    background: #18191b;
+    border-radius: 4px;
+    margin: 0 0.2rem;
+    width: 30px;
+    height: 29px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%), 0 1px 3px 1px rgb(0 0 0 / 15%);
+    float: left;
+    padding: 0.3rem;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2b2024;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+.link {
+    width: 22px;
+    padding: 4px 0 0;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    cursor: pointer;
+}
+:host ::ng-deep p-overlayPanel {
+    background: #ffffff;
+    color: #495057;
+    border: 0 none;
+    border-radius: 3px;
+    box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+}
+.conteinerOverlayPanel-login:hover {
+    background-color: #c5c5c594;
+}
+.conteinerOverlayPanel-login {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 10px;
+    background-color: #ebebeb94;
+    border-radius: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    cursor: pointer;
+    align-items: flex-start;
+    grid-gap: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    height: 54px;
+    gap: 20px;
+}
+.options {
+    align-items: center;
+}
+.logoRight {
+    color: #29b6f6;
+    font-size: 16px;
+    background: black;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logoUser {
+    display: flex;
+    flex-direction: column;
+}
+.logoRight img {
+    width: 20px;
+    height: 20px;
+}
+.userInformation {
+    display: flex;
+    flex-direction: column;
+}
+.userInformation small {
+    white-space: nowrap;
+}
+.userInformation small:last-child {
+    font-size: 10px;
+}
+:host ::ng-deep .p-overlaypanel {
+    text-align: center !important
+}
+.fa-satellite-dish {
+    position: absolute;
+    font-size: 18px;
+    bottom: 23px;
+    right: 20px;
+}
+.flag {
+    width: 30px;
+}

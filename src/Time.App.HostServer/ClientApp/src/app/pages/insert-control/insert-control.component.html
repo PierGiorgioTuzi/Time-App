@@ -1,0 +1,71 @@
+<div class="topbar">
+    <app-topbar [activeLink]="activeLink"></app-topbar>
+  </div>
+<div class="container-fluid">
+    <div class="header-title">
+        <div class="col-12 flex filters">
+            <div class="col-2 flex column">
+                <label>{{'staffPrice.user' | translate}}</label>
+                <p-multiSelect [(ngModel)]="usersSelected" [options]="userList" field="name" optionLabel="name"
+                    optionValue="id" #user="ngModel" defaultLabel="{{'agenda.userStatus' | translate}}"
+                    selectedItemsLabel="{{labelUserMultiSelect}}" (onChange)="updateRange();setLabels()">
+                </p-multiSelect>
+            </div>
+            <div class="col-2 flex column dates">
+                <label>{{'insertControl.selectDates' | translate}}</label>
+                <div class="range flex">
+                    <p-calendar [(ngModel)]="startDateFilter" [readonlyInput]="true" dateFormat="dd/mm/yy"  [maxDate]="endDateFilter"  appendTo="body" (onSelect)="updateRange()"></p-calendar>
+                    <p-calendar [(ngModel)]="endDateFilter" [readonlyInput]="true" dateFormat="dd/mm/yy" [minDate]="startDateFilter"  appendTo="body" (onSelect)="updateRange()"></p-calendar>
+                </div>
+            </div>
+            <div class="col-1 flex column">
+                <label>{{'agenda.project' | translate}}</label>
+                <p-multiSelect [options]="projectList" [(ngModel)]="selectedProject" optionLabel="name"
+                optionValue="id" defaultLabel="{{'agenda.projectStatus' | translate}}"
+                selectedItemsLabel="{{selectedItemsLabelProjectForCalendar}}" (onChange)="updateRange();setLabels()">
+              </p-multiSelect>
+            </div>
+            <div class="col-1 flex column">
+                <label>{{'registry.task' | translate}}</label>
+                <p-multiSelect [options]="agendaTypeList" [(ngModel)]="selectedAgendaType" optionLabel="name"
+                optionValue="id" defaultLabel="{{'agenda.agendaTypeStatus' | translate}}"
+                selectedItemsLabel="{{selectedItemsLabelAgendaType}}"
+                (onChange)="updateRange();setLabels()"></p-multiSelect>
+            </div>
+            <div class="col-2 flex column" style="text-align:center">
+                <label>{{'insertControl.weekend' | translate}}</label>
+                <p-toggleButton #toggle id="toggle" [onLabel]="'Weekend ON'"
+                [style]="{'width' : '150px', 'font-size' : '12px', 'padding': '9px'}" [offLabel]="'Weekend OFF'"
+                [onIcon]="'pi pi-check'" (onChange)="toggleWeekend($event)" offIcon="pi pi-times" [(ngModel)]="weekend">
+                </p-toggleButton>
+           </div>
+            <div class="col-2 flex column">
+                <label style="visibility:hidden">{{'staffPrice.costItemTypeName' | translate}}</label>
+                <button pButton type="button" class="userFilterButton" label="{{'agenda.reset' | translate}}"
+                    (click)="resetFilter()" [disabled]="checkFilters()"></button>
+            </div>
+           
+        </div>
+        <p-table [value]="insertControlList" responsiveLayout="scroll" [lazyLoadOnInit]="false"
+        scrollDirection="both" [scrollable]="true" scrollHeight="80vh" [lazy]="true" (onLazyLoad)="updateRange('page')"
+        [virtualScroll]="true" virtualScrollItemSize="2" >
+            <ng-template pTemplate="header">
+                <tr>
+                       <th pFrozenColumn style="width:200px" >{{'staffPrice.user' | translate}}</th>  
+                     <th *ngFor="let header of headerTable" style="width:120px">
+                        {{header}}
+                    </th> 
+                     <th style="width:150px">{{'staffPrice.total' | translate}}</th> 
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex"> 
+                <tr>
+                     <td pFrozenColumn style="width:200px" (click)="goToAgenda(item)" class="name">{{getNameFromEmployesId(item[0])}}</td> 
+                   <!--    <td  style="width:120px">{{item.loggedHours}}</td> -->
+                    <td style="width:120px" *ngFor="let el of item[1]" [ngClass]="el.loggedHours > 0 ? 'colored' : ''" >{{el.loggedHours}}</td>
+                 <td style="width:150px">{{getTotal(item[1])}}</td>   
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>    
+</div>

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Z4+9wwMz65OReNBRR8wzMvtTxgrMiBOa78D77whDLSSET5xBQFI5+yFQBjoRHNDr1UCXZHidsSm8zVYp9Fq1uw==",
+  "success": true,
+  "projectFilePath": "/Users/webster.velasco/Desktop/_sources/project_time/time_app/src/Time.App.HostServer/Time.App.HostServer.csproj",
+  "expectedPackageFiles": [
+    "/Users/webster.velasco/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/Users/webster.velasco/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/webster.velasco/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "/Users/webster.velasco/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "/Users/webster.velasco/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "/Users/webster.velasco/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

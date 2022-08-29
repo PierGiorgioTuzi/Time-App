@@ -1,0 +1,12 @@
+{
+    "wikiUrl":"",
+    "supportUrl":"",
+    "apiEndpoint":"https://localhost:44365",
+    "authUrl": "",
+    "returnUrl": "http://localhost:4200",
+    "imagesRepositoryUrl": "",
+    "images3dRepositoryUrl": "",
+    "seqLoggerEndpoint": "",
+    "loggingEnabled": false
+  }
+  

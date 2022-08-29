@@ -1,0 +1,225 @@
+<ng-container *ngIf="tableType === tableTypeENUM.USERS">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.jobTitle' | translate}}</label>
+            <input type="text" [(ngModel)]="form.jobTitle" name="jobTitle" required #jobTitle="ngModel">
+        </div>
+        <div class="flex col-12">
+            <div class="col-6 flex column" *ngIf="!isEditMode">
+                <label>{{'registry.email' | translate}}</label>
+                <input type="text" [(ngModel)]="form.email" name="email" required #email="ngModel">
+            </div>
+            <div class="col-6 flex column email" *ngIf="!isEditMode">
+                <span>@retailitaliasrl.it</span>
+            </div>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.usersType' | translate}}</label>
+            <p-riAutoComplete [(ngModel)]="form.employeesType" [suggestions]="employeementList" [required]="true"
+                (completeMethod)="getEmployeesList($event)" field="name" [completeOnFocus]="true" [autocomplete]="''"
+                #employeesType="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'" [autoHighlight]="true"
+                name="employeesType" [dropdown]="true" appendTo="body" dataKey="id" [style]="{'width': '100%' }"
+                autocomplete="off" appendTo="body" [undoStyleClass]="'p-button-text p-form-field-action-button'"
+                [clearStyleClass]="'p-button-text p-form-field-action-button'">
+            </p-riAutoComplete>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.role' | translate}}</label>
+            <p-riAutoComplete 
+            [(ngModel)]="form.role" [autocomplete]="''" [autoHighlight]="true" [completeOnFocus]="true" [clearStyleClass]="'p-button-text p-form-field-action-button'"
+            [dropdown]="true" [panelStyleClass]="'p-form-field-autocomplete-panel'" [required]="true" [style]="{'width': '100%' }" [suggestions]="roleList" 
+            [undoStyleClass]="'p-button-text p-form-field-action-button'" (completeMethod)="getRoleList($event)" #role="ngModel"
+             autocomplete="off" appendTo="body" dataKey="id" field="name" name="role">   
+            </p-riAutoComplete>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.active' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.active" name="active" required #active="ngModel"></p-inputSwitch>
+        </div>
+
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.USERTYPE">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.active' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.active" name="active" required #active="ngModel"></p-inputSwitch>
+        </div>
+
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.TASK">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'agenda.agendaType' | translate}}</label>
+            <p-riAutoComplete [(ngModel)]="form.agendaType" [suggestions]="agendaTypeList" [required]="true"
+                (completeMethod)="getAgendaTypeList($event)" field="name" [completeOnFocus]="true" [autocomplete]="''"
+                #role="ngModel" [panelStyleClass]="'p-form-field-autocomplete-panel'" [autoHighlight]="true" name="role"
+                [dropdown]="true" appendTo="body" dataKey="id" [style]="{'width': '100%' }" autocomplete="off"
+                appendTo="body" [undoStyleClass]="'p-button-text p-form-field-action-button'"
+                [clearStyleClass]="'p-button-text p-form-field-action-button'">
+            </p-riAutoComplete>
+        </div>
+
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.ROLES">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.level' | translate}}</label>
+            <input type="number" [(ngModel)]="form.level" name="level" required #level="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeSameLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeSameLevel" name="canSeeSameLevel" required #canSeeSameLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeOverLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeOverLevel" name="canSeeOverLevel" required #canSeeOverLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeUnderLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeUnderLevel" name="canSeeUnderLevel" required #canSeeUnderLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canModifySameLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canModifySameLevel" name="canModifySameLevel" required #canModifySameLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canModifyOverLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canModifyOverLevel" name="canModifyOverLevel" required #canModifyOverLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canModifyUnderLevel' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canModifyUnderLevel" name="canModifyUnderLevel" required #canModifyUnderLevel="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeAndModifyRegistry' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeAndModifyRegistry" name="canSeeAndModifyRegistry" required #canSeeAndModifyRegistry="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeAndModifyCosts' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeAndModifyCosts" name="canSeeAndModifyCosts" required #canSeeAndModifyCosts="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.canSeeAndModifyInsertControl' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canSeeAndModifyInsertControl" name="canSeeAndModifyInsertControl" required #canSeeAndModifyInsertControl="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.active' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.active" name="active" required #active="ngModel"></p-inputSwitch>
+        </div>
+
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.TASKTYPE">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.active' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.active" name="active" required #active="ngModel"></p-inputSwitch>
+        </div>
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+
+
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.SITE">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="tableType === tableTypeENUM.PERSONALCOST">
+    <form #employe="ngForm">
+        <div class="col-12 flex column">
+            <label>{{'registry.name' | translate}}</label>
+            <input type="text" [(ngModel)]="form.name" name="name" required #name="ngModel">
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.enableEditing' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canModifyForWorker" name="canModifyForWorker" #canModifyForWorker="ngModel"></p-inputSwitch>
+        </div>
+        <div class="col-12 flex column">
+            <label>{{'registry.enableEditingThirdParts' | translate}}</label>
+            <p-inputSwitch [(ngModel)]="form.canModifyForThirdPart" name="canModifyForThirdPart" #canModifyForThirdPart="ngModel"></p-inputSwitch>
+        </div>
+        <div class="flex col-12 footer">
+            <button type="button" icon="pi pi-check" class="confirm p-button p-component p-button-icon-only"
+                (click)="saveEmployee()" [disabled]="employe.invalid">
+                <span class="p-button-icon pi pi-check" *ngIf="!loading"></span>
+                <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+            </button>
+        </div>
+    </form>
+</ng-container>

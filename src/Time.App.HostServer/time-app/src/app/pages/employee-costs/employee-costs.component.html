@@ -1,0 +1,282 @@
+<!-- <div class="topbar">
+    <app-topbar [activeLink]="activeLink"></app-topbar>
+  </div>
+<div class="container-fluid">
+    <div class="header-title" *ngIf="loadForm">
+        <div class="col-12 flex filters">
+            <div class="col-2 flex column">
+                <label>{{'staffPrice.selectYear' | translate}}</label>
+                <p-multiSelect [(ngModel)]="userYearSelected" [options]="yearsList" field="" optionLabel=""
+                    optionValue="" #year="ngModel" defaultLabel="{{'staffPrice.yearSelected' | translate}}"
+                    selectedItemsLabel="{{labelYearMultiSelect}}" (onChange)="updateStaffPriceList();setLabels()">
+                </p-multiSelect>
+            </div>
+            <div class="col-2 flex column">
+                <label>{{'staffPrice.user' | translate}}</label>
+                <p-multiSelect [(ngModel)]="usersSelected" [options]="userList" field="name" optionLabel="name"
+                    optionValue="id" #user="ngModel" defaultLabel="{{'agenda.userStatus' | translate}}"
+                    selectedItemsLabel="{{labelUserMultiSelect}}" (onChange)="updateStaffPriceList();setLabels()">
+                </p-multiSelect>
+            </div>
+            <div class="col-3 flex column" style="padding: 0 40px">
+                <div class="label">
+                    <label>{{'staffPrice.costItemTypeName' | translate}}</label>
+                    
+                </div>
+                <div class="flex cost">
+                    <p-multiSelect [(ngModel)]="costItemSelected" [options]="costItemList" field="name" optionLabel="name" [style]="{'maxWidth':'200px'}"
+                        optionValue="id" #costItem="ngModel" defaultLabel="{{'staffPrice.costItemFilter' | translate}}"
+                        selectedItemsLabel="{{labelCostItemMultiSelect}}" (onChange)="updateStaffPriceList();setLabels()">
+                    </p-multiSelect>
+                    <div class="editingCost">
+                        <label>{{'staffPrice.editingCost' | translate}}</label>
+                        <p-checkbox [(ngModel)]="changeableCosts" [binary]="true" (onChange)="changeTypeCost($event)"></p-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1 flex column">
+                <label style="visibility:hidden">{{'staffPrice.costItemTypeName' | translate}}</label>
+                <button pButton type="button" class="userFilterButton" label="{{'agenda.reset' | translate}}"
+                    (click)="resetFilter()" [disabled]="checkFilters()"></button>
+            </div>
+            <div class="col-3 flex column" style="text-align:center">
+                <label>{{'staffPrice.import' | translate}}</label>
+                <div class="import">
+                    <p-dropdown [options]="yearsList" [(ngModel)]="yearForImporter" optionLabel="" field=""></p-dropdown>
+                    <form #excel>
+                    <input type="file" id="excel" (click)="this.excel.reset()" (change)="importExcel($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> 
+                    </form>    
+                </div>
+            </div>
+        </div>
+        <div class="card"> 
+            <p-table [value]="staffPriceList" dataKey="id" responsiveLayout="scroll" [paginator]="true" [rows]="20" [loading]="loading">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>{{'staffPrice.user' | translate}}</th>
+                        <th>{{'staffPrice.costItemTypeName' | translate}}</th>
+                        <th>{{'staffPrice.january' | translate}}</th>
+                        <th>{{'staffPrice.february' | translate}}</th>
+                        <th>{{'staffPrice.march' | translate}}</th>
+                        <th>{{'staffPrice.april' | translate}}</th>
+                        <th>{{'staffPrice.may' | translate}}</th>
+                        <th>{{'staffPrice.june' | translate}}</th>
+                        <th>{{'staffPrice.july' | translate}}</th>
+                        <th>{{'staffPrice.august' | translate}}</th>
+                        <th>{{'staffPrice.september' | translate}}</th>
+                        <th>{{'staffPrice.october' | translate}}</th>
+                        <th>{{'staffPrice.november' | translate}}</th>
+                        <th>{{'staffPrice.december' | translate}}</th>
+                        <th>{{'staffPrice.year' | translate}}</th>
+                        <th>{{'staffPrice.total' | translate}}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td  (click)="goToAgenda(item.userId)" [ngClass]="{'external' : item.roleId === 30}" class="name">
+                            {{item.employeeName}}
+                        </td>
+                        <td [ngClass]="{editableTD: item.enableEditing}">
+                            {{item.costItemTypeName}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.january" mode="decimal" (onFocus)="checkInfo(item)" (keydown.enter)="updateStaffPrice(item)" 
+                                        [maxFractionDigits]="2" [minFractionDigits]="2"
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.january}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.january}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.february" mode="decimal" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onFocus)="checkInfo(item)" [maxFractionDigits]="2" [minFractionDigits]="2"
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.february}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.february}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.march" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.march}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.march}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.april" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.april}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.april}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.may" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.may}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.may}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.june" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.june}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.june}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.july" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.july}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.july}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.august" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.august}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.august}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.september" mode="decimal" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onFocus)="checkInfo(item)" [maxFractionDigits]="2" [minFractionDigits]="2"
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.september}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.september}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.october" mode="decimal" (onFocus)="checkInfo(item)"
+                                        [maxFractionDigits]="2" [minFractionDigits]="2" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.october}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.october}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.november" mode="decimal" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onFocus)="checkInfo(item)" [maxFractionDigits]="2" [minFractionDigits]="2"
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.november}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing && !isThirdPart(item)" class="not-editable">
+                            {{item.november}}
+                        </td>
+                        <td pEditableColumn *ngIf="item.enableEditing || isThirdPart(item)">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputNumber [(ngModel)]="item.december" mode="decimal" (keydown.enter)="updateStaffPrice(item)" 
+                                        (onFocus)="checkInfo(item)" [maxFractionDigits]="2" [minFractionDigits]="2"
+                                        (onBlur)="updateStaffPrice(item)"></p-inputNumber>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.december}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn *ngIf="!item.enableEditing  && !isThirdPart(item)" class="not-editable">
+                            {{item.december}}
+                        </td>
+                        <td>
+                            {{item.year}}
+                        </td>
+                        <td>
+                            {{getTotal(item)}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <p-paginator [rows]="10" [totalRecords]="staffPriceList.length"></p-paginator>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+
+<p-toast position="top-center"></p-toast>
+
+
+
+<p-confirmDialog header="confirmationExcel" #confirmationExcel key="confirmationExcel">
+  </p-confirmDialog> -->
